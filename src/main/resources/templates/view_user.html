@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+</head>
+<body>
+<h1>Hello world!</h1>
+
+<table border="1">
+    <tr>
+        <th>User Name</th>
+        <th>Pass Word</th>
+    </tr>
+    <tr th:each ="userKey : ${user}">
+        <td th:utext="${userKey.getUsername()}">...</td>
+        <td th:utext="${userKey.getPassword()}">...</td>
+        <td th:utext="${userKey.getRole().getRoleName()}">...</td>
+    </tr>
+</table>
+<a th:href="@{/addPerson}">Add Peron</a>
+</body>
+</html>
