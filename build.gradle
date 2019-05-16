@@ -1,6 +1,8 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
+	id "io.freefair.javadoc-utf-8" version "3.5.1"
+
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -22,6 +24,9 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile group: 'org.apache.ibatis', name: 'ibatis-sqlmap', version: '2.3.4.726'
+//	compile group: 'org.apache.ibatis', name: 'ibatis-sqlmap', version: '2.3.4.726'
+	// https://mvnrepository.com/artifact/org.webjars.npm/utf8
+	compile group: 'org.webjars.npm', name: 'utf8', version: '2.1.2'
+
 
 }

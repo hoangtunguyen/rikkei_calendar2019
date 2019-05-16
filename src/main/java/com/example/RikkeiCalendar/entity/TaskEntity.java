@@ -32,7 +32,7 @@ public class TaskEntity {
     @JoinColumn(name = "image_url")
     private String imageURL;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "creator_id")
     private UserEntity creator;
 

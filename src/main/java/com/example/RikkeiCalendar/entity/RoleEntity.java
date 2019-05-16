@@ -11,16 +11,21 @@ public class RoleEntity {
     @JoinColumn(name = "id")
     private int id;
 
-    @JoinColumn(name = "role_name")
+    @Column(name = "role_name")
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "roleEntity",fetch = FetchType.LAZY)
     private List<UserEntity> users;
 
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag")
     private int delFlag;
 
     public RoleEntity() {
+    }
+
+    public RoleEntity(String roleName, int delFlag) {
+        this.roleName = roleName;
+        this.delFlag = delFlag;
     }
 
     public RoleEntity(String roleName, List<UserEntity> users, int delFlag) {

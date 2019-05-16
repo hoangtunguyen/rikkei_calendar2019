@@ -8,21 +8,21 @@ import java.util.List;
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private int userId;
 
-    @JoinColumn(name = "name")
+    @Column(name = "name")
     private String name;
 
-    @JoinColumn(name = "username")
+    @Column(name = "username")
     private String username;
 
-    @JoinColumn(name = "password")
+    @Column(name = "password")
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id",nullable = false)
-    private RoleEntity role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleEntity;
 
     @OneToMany(mappedBy = "userEntity")
     private List<TeamEntity> teamEntityList;
@@ -37,21 +37,18 @@ public class UserEntity {
     @OneToMany(mappedBy = "creator")
     private List<TaskEntity> ownTasks;
 
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag")
     private int delFlag;
 
     public UserEntity() {
     }
 
-    public UserEntity(String name, String username, String password, RoleEntity role, List<TeamEntity> teamEntityList, List<UserTeamEntity> userTeamEntities, List<UserTaskEntity> userTaskEntities, List<TaskEntity> ownTasks, int delFlag) {
+
+    public UserEntity(String name, String username, String password, RoleEntity roleEntity, int delFlag) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.role = role;
-        this.teamEntityList = teamEntityList;
-        this.userTeamEntities = userTeamEntities;
-        this.userTaskEntities = userTaskEntities;
-        this.ownTasks = ownTasks;
+        this.roleEntity = roleEntity;
         this.delFlag = delFlag;
     }
 
@@ -88,11 +85,11 @@ public class UserEntity {
     }
 
     public RoleEntity getRole() {
-        return role;
+        return roleEntity;
     }
 
     public void setRole(RoleEntity role) {
-        this.role = role;
+        this.roleEntity = role;
     }
 
     public List<TeamEntity> getTeamEntityList() {

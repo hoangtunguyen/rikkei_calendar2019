@@ -14,7 +14,7 @@ public class RoleTeamEntity {
     @JoinColumn(name = "role_team_name")
     private String roleTeamName;
 
-    @OneToMany(mappedBy = "roleTeamEntity")
+    @OneToMany(mappedBy = "roleTeamEntity",fetch = FetchType.EAGER)
     private List<UserTeamEntity> userTeamEntities;
 
     @JoinColumn(name = "del_flag")
