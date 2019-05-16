@@ -2,9 +2,7 @@ package com.example.RikkeiCalendar.controller;
 
 import com.example.RikkeiCalendar.convert.RoleConvert;
 import com.example.RikkeiCalendar.convert.UserConvert;
-import com.example.RikkeiCalendar.entity.RoleEntity;
-import com.example.RikkeiCalendar.entity.UserEntity;
-import com.example.RikkeiCalendar.repository.UserRepository;
+
 import com.example.RikkeiCalendar.request.RoleRequest;
 import com.example.RikkeiCalendar.request.UserRequest;
 import com.example.RikkeiCalendar.respones.RoleResponse;
@@ -12,11 +10,7 @@ import com.example.RikkeiCalendar.respones.UserRespone;
 import com.example.RikkeiCalendar.service.RoleSerVice;
 import com.example.RikkeiCalendar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,32 +26,34 @@ public class UserRestController {
     @Autowired
     private RoleSerVice roleSerVice;
 
-    @RequestMapping(value = "/user", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, //
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, //
             MediaType.APPLICATION_XML_VALUE})
-    public List<UserRespone> getUser() {
+    public List<UserRespone> getUsers() {
         return userService.findAll().stream().map(UserConvert::convert).collect(Collectors.toList());
     }
-    @RequestMapping(value = "/role", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, //
-            MediaType.APPLICATION_XML_VALUE})
-    public List<RoleEntity> getRoleName() {
-        return roleSerVice.findAll();
-    }
-    @GetMapping(path = "/getAllRoleName")
-    public List<RoleResponse> getAllRoleName(){
+
+
+
+    @GetMapping(path = "/getRoles")
+    public List<RoleResponse> getRoles() {
         return roleSerVice.getAllRole().stream().map(RoleConvert::convert).collect(Collectors.toList());
     }
+
     @PostMapping(value = "/addUser")
-    public void saveUser(@RequestBody UserRequest userRequest){
+    public void saveUser(@RequestBody UserRequest userRequest) {
         userService.saveUser(userRequest);
     }
 
 
     @PostMapping(value = "/addRole")
-    public void saveRole(@RequestBody RoleRequest roleRequest){
+    public void saveRole(@RequestBody RoleRequest roleRequest) {
         roleSerVice.saveRole(roleRequest);
     }
 
+    @PutMapping(path = "/updateUser/{userId}")
+    public void updateUser(@PathVariable int userId, @Valid @RequestBody UserRequest userRequest) {
+        userService.updateUserById(userId,userRequest);
 
-
+    }
 
 }

@@ -2,53 +2,57 @@ package com.example.RikkeiCalendar.entity;
 
 
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-
+@Setter
+@Getter
 @Entity
 @Table(name = "task")
-public class TaskEntity {
+public class TaskEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "id")
+    @Column(name = "id")
     private int id;
 
-    @JoinColumn(name = "title")
+    @Column(name = "title",length = 50)
     private String title;
 
-    @JoinColumn(name = "detail")
+    @Column(name = "detail")
     private String detail;
 
-    @JoinColumn(name = "location")
+    @Column(name = "location",length = 50)
     private String location;
 
-    @JoinColumn(name = "start_time")
+    @Column(name = "start_time")
     private Timestamp startTime;
 
-    @JoinColumn(name = "finish_time")
+    @Column(name = "finish_time")
     private Timestamp finishTime;
 
-    @JoinColumn(name = "image_url")
+    @Column(name = "image_url")
     private String imageURL;
 
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private UserEntity creator;
 
-    @JoinColumn(name = "all_day")
+    @Column(name = "all_day")
     private boolean allDay=false;
 
-    @JoinColumn(name = "status")
+    @Column(name = "status",length = 50)
     private int status;
 
-    @JoinColumn(name = "create_at")
+    @Column(name = "create_at")
     private Timestamp createAt;
 
     @OneToMany(mappedBy = "taskEntity")
     private List<UserTaskEntity> userTaskEntities;
 
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag",length = 10)
     private int delFlag;
 
     public TaskEntity() {

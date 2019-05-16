@@ -10,4 +10,7 @@ public interface UserService {
     List<UserEntity> findAll();
     void saveUser(UserRequest request);
 
+    UserEntity getUserById(int id);
+
+    void updateUserById(int userId, UserRequest userRequest);
 }
