@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUserById(int userId, UserRequest userRequest) {
-        UserEntity user = userRepository.findById(userId).get();
+    public void updateUserById(UserRequest userRequest) {
+        UserEntity user = userRepository.findById(userRequest.getId()).get();
         user.setRole(roleRepository.findById(userRequest.getRoleId()).get());
         user.setName(userRequest.getName());
         user.setUsername(userRequest.getUsername());

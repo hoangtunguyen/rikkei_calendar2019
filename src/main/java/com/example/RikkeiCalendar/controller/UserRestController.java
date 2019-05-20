@@ -39,7 +39,7 @@ public class UserRestController {
         return roleSerVice.getAllRole().stream().map(RoleConvert::convert).collect(Collectors.toList());
     }
 
-    @PostMapping(value = "/addUser")
+        @PostMapping(value = "/addUser")
     public void saveUser(@RequestBody UserRequest userRequest) {
         userService.saveUser(userRequest);
     }
@@ -50,9 +50,9 @@ public class UserRestController {
         roleSerVice.saveRole(roleRequest);
     }
 
-    @PutMapping(path = "/updateUser/{userId}")
-    public void updateUser(@PathVariable int userId, @Valid @RequestBody UserRequest userRequest) {
-        userService.updateUserById(userId,userRequest);
+    @PutMapping(path = "/updateUser")
+    public void updateUser(@Valid @RequestBody UserRequest userRequest) {
+        userService.updateUserById(userRequest);
 
     }
 

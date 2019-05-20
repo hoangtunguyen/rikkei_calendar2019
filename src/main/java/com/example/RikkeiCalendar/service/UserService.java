@@ -12,5 +12,5 @@ public interface UserService {
 
     UserEntity getUserById(int id);
 
-    void updateUserById(int userId, UserRequest userRequest);
+    void updateUserById(UserRequest userRequest);
 }

@@ -31,15 +31,14 @@ public class UserEntity extends Auditable<String> {
     @OneToMany(mappedBy = "userEntity")
     private List<TeamEntity> teamEntityList;
 
+    @OneToMany(mappedBy = "userEntityOfBigUserTask")
+    private List<BigUserTaskEntity> bigUserTaskEntities;
 
     @OneToMany(mappedBy = "user")
     private List<UserTeamEntity> userTeamEntities;
 
     @OneToMany(mappedBy = "userInTask")
     private List<UserTaskEntity> userTaskEntities;
-
-    @OneToMany(mappedBy = "creator")
-    private List<TaskEntity> ownTasks;
 
     @Column(name = "del_flag",length = 10)
     private int delFlag;
@@ -118,14 +117,6 @@ public class UserEntity extends Auditable<String> {
 
     public void setUserTaskEntities(List<UserTaskEntity> userTaskEntities) {
         this.userTaskEntities = userTaskEntities;
-    }
-
-    public List<TaskEntity> getOwnTasks() {
-        return ownTasks;
-    }
-
-    public void setOwnTasks(List<TaskEntity> ownTasks) {
-        this.ownTasks = ownTasks;
     }
 
     public int getDelFlag() {

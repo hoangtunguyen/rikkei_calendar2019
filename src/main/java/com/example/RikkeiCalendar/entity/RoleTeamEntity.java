@@ -18,7 +18,7 @@ public class RoleTeamEntity extends Auditable<String> {
     @Column(name = "role_team_name",length = 50)
     private String roleTeamName;
 
-    @OneToMany(mappedBy = "roleTeamEntity",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "roleTeamEntity")
     private List<UserTeamEntity> userTeamEntities;
 
     @Column(name = "del_flag",length = 10)
