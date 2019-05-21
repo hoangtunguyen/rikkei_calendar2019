@@ -1,5 +1,7 @@
 package com.example.RikkeiCalendar.respones;
 
+import java.sql.Timestamp;
+
 public class UserRespone {
     private int id;
     private String name;
@@ -7,16 +9,17 @@ public class UserRespone {
     private String password;
     private int roleId;
     private String roleName;
-
+    private Timestamp timestamp;
     public UserRespone() {
     }
 
-    public UserRespone(int id, String name, String username, String password, String roleName) {
+    public UserRespone(int id, String name, String username, String password, String roleName, Timestamp timestamp) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
         this.roleName = roleName;
+        this.timestamp=timestamp;
     }
 
     public int getId() {
@@ -65,5 +68,13 @@ public class UserRespone {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }

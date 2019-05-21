@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -53,7 +54,7 @@ public class Auditable<U> {
         this.createdBy = createdBy;
     }
 
-    public Date getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
@@ -69,7 +70,7 @@ public class Auditable<U> {
         this.updatedBy = updatedBy;
     }
 
-    public Date getUpdatedDate() {
+    public Timestamp getUpdatedDate() {
         return updatedDate;
     }
 

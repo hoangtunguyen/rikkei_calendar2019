@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 @Setter
 @Getter
@@ -52,6 +53,19 @@ public class UserEntity extends Auditable<String> {
         this.username = username;
         this.password = password;
         this.roleEntity = roleEntity;
+        this.delFlag = delFlag;
+    }
+
+    public UserEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String name, String username, String password, RoleEntity roleEntity, List<TeamEntity> teamEntityList, List<BigUserTaskEntity> bigUserTaskEntities, List<UserTeamEntity> userTeamEntities, List<UserTaskEntity> userTaskEntities, int delFlag) {
+        super(createdBy, createdDate, updatedBy, updatedDate);
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.roleEntity = roleEntity;
+        this.teamEntityList = teamEntityList;
+        this.bigUserTaskEntities = bigUserTaskEntities;
+        this.userTeamEntities = userTeamEntities;
+        this.userTaskEntities = userTaskEntities;
         this.delFlag = delFlag;
     }
 
@@ -126,4 +140,22 @@ public class UserEntity extends Auditable<String> {
     public void setDelFlag(int delFlag) {
         this.delFlag = delFlag;
     }
+
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
+
+    public List<BigUserTaskEntity> getBigUserTaskEntities() {
+        return bigUserTaskEntities;
+    }
+
+    public void setBigUserTaskEntities(List<BigUserTaskEntity> bigUserTaskEntities) {
+        this.bigUserTaskEntities = bigUserTaskEntities;
+    }
+
+
 }

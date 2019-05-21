@@ -13,25 +13,25 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
     private int id;
 
     @Column(name = "cate_name")
-    private String categoryName;
+    private CategoryEnum categoryName=CategoryEnum.NONE;
 
-    @Column(name = "repeat_duration")
-    private int repeatDuration;
+    @Column(name = "finishTimeRepeat")
+    private Timestamp finishTimeRepeat;
     @Column(name = "del_flag")
     private int del_flag;
 
     @OneToMany(mappedBy = "repeatCatetoryEntity")
     private List<CategoryTypeEntity> categoryTypeEntities;
-    @OneToMany(mappedBy = "repeatCatetoryEntity")
-    private List<BigTaskEntity> bigTaskEntities;
+    @OneToOne(mappedBy = "repeatCatetoryEntity",cascade = CascadeType.ALL)
+    private BigTaskEntity bigTaskEntities;
 
     public RepeatCatetoryEntity() {
     }
 
-    public RepeatCatetoryEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String categoryName, int repeatDuration, int del_flag, List<CategoryTypeEntity> categoryTypeEntities, List<BigTaskEntity> bigTaskEntities) {
+    public RepeatCatetoryEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, CategoryEnum categoryName, Timestamp finishTimeRepeat, int del_flag, List<CategoryTypeEntity> categoryTypeEntities, BigTaskEntity bigTaskEntities) {
         super(createdBy, createdDate, updatedBy, updatedDate);
         this.categoryName = categoryName;
-        this.repeatDuration = repeatDuration;
+        this.finishTimeRepeat = finishTimeRepeat;
         this.del_flag = del_flag;
         this.categoryTypeEntities = categoryTypeEntities;
         this.bigTaskEntities = bigTaskEntities;
@@ -45,20 +45,20 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
         this.id = id;
     }
 
-    public String getCategoryName() {
+    public CategoryEnum getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
+    public void setCategoryName(CategoryEnum categoryName) {
         this.categoryName = categoryName;
     }
 
-    public int getRepeatDuration() {
-        return repeatDuration;
+    public Timestamp getFinishTimeRepeat() {
+        return finishTimeRepeat;
     }
 
-    public void setRepeatDuration(int repeatDuration) {
-        this.repeatDuration = repeatDuration;
+    public void setFinishTimeRepeat(Timestamp finishTimeRepeat) {
+        this.finishTimeRepeat = finishTimeRepeat;
     }
 
     public int getDel_flag() {
@@ -77,11 +77,11 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
         this.categoryTypeEntities = categoryTypeEntities;
     }
 
-    public List<BigTaskEntity> getBigTaskEntities() {
+    public BigTaskEntity getBigTaskEntities() {
         return bigTaskEntities;
     }
 
-    public void setBigTaskEntities(List<BigTaskEntity> bigTaskEntities) {
+    public void setBigTaskEntities(BigTaskEntity bigTaskEntities) {
         this.bigTaskEntities = bigTaskEntities;
     }
 }

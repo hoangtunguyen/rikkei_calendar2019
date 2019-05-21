@@ -39,8 +39,6 @@ public class BigTaskEntity extends Auditable<String>  {
 
     @Column(name = "status",length = 50)
     private int status;
-    @Column(name = "finishTimeRepeat")
-    private Timestamp finishTimeRepeat;
 
     @OneToMany(mappedBy = "bigTaskEntity")
     private List<TaskEntity> taskEntities;
@@ -50,8 +48,8 @@ public class BigTaskEntity extends Auditable<String>  {
 
     @OneToMany(mappedBy = "bigTaskEntity")
     private List<BigUserTaskEntity> bigUserTaskEntities;
-    @ManyToOne
-    @JoinColumn(name = "repeat_id")
+    @OneToOne
+    @JoinColumn(name = "repeat_id",unique = true)
     private RepeatCatetoryEntity repeatCatetoryEntity;
 
     @Column(name = "del_flag",length = 10)
@@ -60,7 +58,7 @@ public class BigTaskEntity extends Auditable<String>  {
     public BigTaskEntity() {
     }
 
-    public BigTaskEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, Timestamp finishTimeRepeat, List<TaskEntity> taskEntities, List<UserTaskEntity> userTaskEntities, List<BigUserTaskEntity> bigUserTaskEntities, RepeatCatetoryEntity repeatCatetoryEntity, int delFlag) {
+    public BigTaskEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, List<TaskEntity> taskEntities, List<UserTaskEntity> userTaskEntities, List<BigUserTaskEntity> bigUserTaskEntities, RepeatCatetoryEntity repeatCatetoryEntity, int delFlag) {
         super(createdBy, createdDate, updatedBy, updatedDate);
         this.title = title;
         this.detail = detail;
@@ -70,7 +68,6 @@ public class BigTaskEntity extends Auditable<String>  {
         this.imageURL = imageURL;
         this.allDay = allDay;
         this.status = status;
-        this.finishTimeRepeat = finishTimeRepeat;
         this.taskEntities = taskEntities;
         this.userTaskEntities = userTaskEntities;
         this.bigUserTaskEntities = bigUserTaskEntities;
@@ -148,14 +145,6 @@ public class BigTaskEntity extends Auditable<String>  {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public Timestamp getFinishTimeRepeat() {
-        return finishTimeRepeat;
-    }
-
-    public void setFinishTimeRepeat(Timestamp finishTimeRepeat) {
-        this.finishTimeRepeat = finishTimeRepeat;
     }
 
     public List<TaskEntity> getTaskEntities() {
