@@ -9,4 +9,6 @@ public enum CategoryEnum {
     CategoryEnum(String cateName){
         this.cateName=cateName;
     }
+
+
 }

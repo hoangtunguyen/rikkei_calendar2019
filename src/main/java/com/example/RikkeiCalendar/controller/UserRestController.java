@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api")
 public class UserRestController {
-    @Autowired
-    RepeatCateService repeatCateService;
+
     @Autowired
     private UserService userService;
     @Autowired
@@ -58,11 +57,6 @@ public class UserRestController {
     public void updateUser(@Valid @RequestBody UserRequest userRequest) {
         userService.updateUserById(userRequest);
 
-    }
-    @RequestMapping(value = "/getRepeats", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE, //
-            MediaType.APPLICATION_XML_VALUE})
-    public List<RepeatCategoryResponse> getRepeats() {
-        return repeatCateService.findAll().stream().map(RepeatCategoryConvert::convert).collect(Collectors.toList());
     }
 
 }

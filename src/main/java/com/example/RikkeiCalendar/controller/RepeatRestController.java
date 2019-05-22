@@ -16,7 +16,7 @@ public class RepeatRestController {
     @Autowired
     RepeatCateService repeatCateService;
 
-    @GetMapping(value = "/getRepeatss")
+    @GetMapping(value = "/getRepeats")
         public List<RepeatCategoryResponse> getRepeats() {
         return repeatCateService.findAll().stream().map(RepeatCategoryConvert::convert).collect(Collectors.toList());
     }

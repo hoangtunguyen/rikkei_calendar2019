@@ -1,19 +1,21 @@
 package com.example.RikkeiCalendar.respones;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class RepeatCategoryResponse {
     private  int id;
     private  String cateName;
     private Timestamp finishTime;
-
+    private List<Integer> repeatDays;
     public RepeatCategoryResponse() {
     }
 
-    public RepeatCategoryResponse(int id, String cateName, Timestamp finishTime) {
+    public RepeatCategoryResponse(int id, String cateName, Timestamp finishTime, List<Integer> repeatDays) {
         this.id = id;
         this.cateName = cateName;
         this.finishTime = finishTime;
+        this.repeatDays = repeatDays;
     }
 
     public int getId() {
@@ -38,5 +40,13 @@ public class RepeatCategoryResponse {
 
     public void setFinishTime(Timestamp finishTime) {
         this.finishTime = finishTime;
+    }
+
+    public List<Integer> getRepeatDays() {
+        return repeatDays;
+    }
+
+    public void setRepeatDays(List<Integer> repeatDays) {
+        this.repeatDays = repeatDays;
     }
 }

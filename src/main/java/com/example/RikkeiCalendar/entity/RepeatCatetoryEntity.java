@@ -13,7 +13,7 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
     private int id;
 
     @Column(name = "cate_name")
-    private CategoryEnum categoryName=CategoryEnum.NONE;
+    private int categoryName;
 
     @Column(name = "finishTimeRepeat")
     private Timestamp finishTimeRepeat;
@@ -28,7 +28,7 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
     public RepeatCatetoryEntity() {
     }
 
-    public RepeatCatetoryEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, CategoryEnum categoryName, Timestamp finishTimeRepeat, int del_flag, List<CategoryTypeEntity> categoryTypeEntities, BigTaskEntity bigTaskEntities) {
+    public RepeatCatetoryEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, int categoryName, Timestamp finishTimeRepeat, int del_flag, List<CategoryTypeEntity> categoryTypeEntities, BigTaskEntity bigTaskEntities) {
         super(createdBy, createdDate, updatedBy, updatedDate);
         this.categoryName = categoryName;
         this.finishTimeRepeat = finishTimeRepeat;
@@ -45,11 +45,11 @@ public class RepeatCatetoryEntity extends Auditable<String>  {
         this.id = id;
     }
 
-    public CategoryEnum getCategoryName() {
+    public int getCategoryName() {
         return categoryName;
     }
 
-    public void setCategoryName(CategoryEnum categoryName) {
+    public void setCategoryName(int categoryName) {
         this.categoryName = categoryName;
     }
 

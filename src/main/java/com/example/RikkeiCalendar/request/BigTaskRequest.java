@@ -1,6 +1,9 @@
 package com.example.RikkeiCalendar.request;
 
+import com.example.RikkeiCalendar.entity.CategoryEnum;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 public class BigTaskRequest {
     private int id;
@@ -13,12 +16,15 @@ public class BigTaskRequest {
     private boolean allDay;
     private int status;
     private int taskRepeatId;
-
+    private List<Integer> userId;
+    private List<Integer> daysOfRepeat;
+    private Timestamp finishRepeat;
+    private int cateRepeat;
 
     public BigTaskRequest() {
     }
 
-    public BigTaskRequest(int id, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, int taskRepeatId) {
+    public BigTaskRequest(int id, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, int taskRepeatId, List<Integer> userId, List<Integer> daysOfRepeat, Timestamp finishRepeat, int cateRepeat) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -29,6 +35,10 @@ public class BigTaskRequest {
         this.allDay = allDay;
         this.status = status;
         this.taskRepeatId = taskRepeatId;
+        this.userId = userId;
+        this.daysOfRepeat = daysOfRepeat;
+        this.finishRepeat = finishRepeat;
+        this.cateRepeat = cateRepeat;
     }
 
     public int getId() {
@@ -109,5 +119,37 @@ public class BigTaskRequest {
 
     public void setTaskRepeatId(int taskRepeatId) {
         this.taskRepeatId = taskRepeatId;
+    }
+
+    public List<Integer> getUserId() {
+        return userId;
+    }
+
+    public void setUserId(List<Integer> userId) {
+        this.userId = userId;
+    }
+
+    public List<Integer> getDaysOfRepeat() {
+        return daysOfRepeat;
+    }
+
+    public void setDaysOfRepeat(List<Integer> daysOfRepeat) {
+        this.daysOfRepeat = daysOfRepeat;
+    }
+
+    public Timestamp getFinishRepeat() {
+        return finishRepeat;
+    }
+
+    public void setFinishRepeat(Timestamp finishRepeat) {
+        this.finishRepeat = finishRepeat;
+    }
+
+    public int getCateRepeat() {
+        return cateRepeat;
+    }
+
+    public void setCateRepeat(int cateRepeat) {
+        this.cateRepeat = cateRepeat;
     }
 }
