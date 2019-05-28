@@ -11,6 +11,7 @@ public class RoleConvert {
    public static RoleResponse convert(RoleEntity roleEntity){
        RoleResponse roleResponse=new RoleResponse();
        List<String> username=new ArrayList<>();
+       List<UserEntity> userEntities=roleEntity.getUsers();
        for (UserEntity userEntity: roleEntity.getUsers()){
            username.add(userEntity.getName());
        }

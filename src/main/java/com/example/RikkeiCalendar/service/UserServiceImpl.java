@@ -1,13 +1,16 @@
 package com.example.RikkeiCalendar.service;
 
+import com.example.RikkeiCalendar.convert.UserConvert;
 import com.example.RikkeiCalendar.entity.UserEntity;
 import com.example.RikkeiCalendar.repository.RoleRepository;
 import com.example.RikkeiCalendar.repository.UserRepository;
 import com.example.RikkeiCalendar.request.UserRequest;
+import com.example.RikkeiCalendar.respones.UserRespone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,19 +22,25 @@ public class UserServiceImpl implements UserService {
     RoleRepository roleRepository;
 
     @Override
-    public List<UserEntity> findAll() {
-        return userRepository.findAllByDelFlagNot(DEL_VALUE);
+    public List<UserRespone> findAll() {
+        return userRepository.findAllByDelFlagNot(DEL_VALUE).stream().map(UserConvert::convert).collect(Collectors.toList());
 
     }
 
     @Override
     public void saveUser(UserRequest request) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName(request.getName());
-        userEntity.setUsername(request.getUsername());
-        userEntity.setPassword(request.getPassword());
-        userEntity.setRole(roleRepository.findById(request.getRoleId()).get());
-        userRepository.save(userEntity);
+        UserEntity user;
+        if (request.getId()!=0){
+            user = userRepository.findById(request.getId()).get();
+        }else {
+            user = new UserEntity();
+        }
+        user.setName(request.getName());
+        user.setUsername(request.getUsername());
+        user.setPassword(request.getPassword());
+        user.setRole(roleRepository.findById(request.getRoleId()).get());
+        userRepository.save(user);
+
     }
 
     @Override
@@ -48,5 +57,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(userRequest.getPassword());
         userRepository.save(user);
 
+    }
+
+    @Override
+    public void deleteUserById(UserRequest userRequest) {
+        UserEntity user = userRepository.findById(userRequest.getId()).get();
+        user.setDelFlag(DEL_VALUE);
+        userRepository.save(user);
     }
 }

@@ -3,8 +3,16 @@ package com.example.RikkeiCalendar.service;
 import com.example.RikkeiCalendar.entity.*;
 import com.example.RikkeiCalendar.repository.*;
 import com.example.RikkeiCalendar.request.BigTaskRequest;
+import com.example.RikkeiCalendar.test.BigFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class BigTaskServiceImpl implements BigTaskService {
@@ -21,7 +29,8 @@ public class BigTaskServiceImpl implements BigTaskService {
     CategoryTypeRepository categoryTypeRepository;
     @Autowired
     BigUserTaskRepository bigUserTaskRepository;
-
+    @Autowired
+    TaskRepository taskRepository;
     @Override
     public void addTask(BigTaskRequest bigTaskRequest) {
         RepeatCatetoryEntity repeat = new RepeatCatetoryEntity();
@@ -56,7 +65,47 @@ public class BigTaskServiceImpl implements BigTaskService {
             bigUserTaskEntity.setUserEntity(userRepository.findById(bigTaskRequest.getUserId().get(i)).get());
             bigUserTaskRepository.save(bigUserTaskEntity);
         }
+        addSupTask(bigTaskEntity1);
 
+    }
+    public void addSupTask(BigTaskEntity bigTaskEntity){
+        TaskEntity taskEntity;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+
+        String startRepeat=sdf.format(bigTaskEntity.getStartTime());
+        String finishRepeat=sdf.format(bigTaskEntity.getRepeatCatetoryEntity().getFinishTimeRepeat());
+        int choiceTypeRepeat=bigTaskEntity.getRepeatCatetoryEntity().getCategoryName();
+        BigFunction bigFunction=new BigFunction();
+        List<Integer> repeatWeek=new ArrayList<>();
+        RepeatCatetoryEntity repeatCatetoryEntities=bigTaskEntity.getRepeatCatetoryEntity();
+        List<CategoryTypeEntity>categoryTypeEntities=categoryTypeRepository.findAllByRepeatCatetoryEntity(repeatCatetoryEntities);
+        for (CategoryTypeEntity categoryTypeEntity:categoryTypeEntities){
+            repeatWeek.add(categoryTypeEntity.getTypeRepeatEntity().getType_name());
+        }
+        List<String> repeatTime =bigFunction.repeatBy(startRepeat,finishRepeat,repeatWeek,choiceTypeRepeat);
+
+        Timestamp time;
+        for (String repeat:repeatTime){
+            taskEntity=new TaskEntity();
+            try {
+                time=Timestamp.valueOf(repeat);
+                taskEntity.setStartTime(time);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            taskEntity.setFinishTime(bigTaskEntity.getFinishTime());
+            taskEntity.setImageURL(bigTaskEntity.getImageURL());
+            taskEntity.setStatus(bigTaskEntity.getStatus());
+            taskEntity.setTitle(bigTaskEntity.getTitle());
+            taskEntity.setDetail(bigTaskEntity.getDetail());
+            taskEntity.setLocation(bigTaskEntity.getLocation());
+            taskEntity.setAllDay(bigTaskEntity.isAllDay());
+            taskEntity.setBigTaskEntity(bigTaskEntity);
+            taskEntity.setDelFlag(bigTaskEntity.getDelFlag());
+            taskEntity.setUserTaskEntities(bigTaskEntity.getUserTaskEntities());
+            taskRepository.save(taskEntity);
+        }
 
 
 

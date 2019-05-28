@@ -41,7 +41,7 @@ public class BigFunction {
         List<String> result = new ArrayList<>();
         Calendar calen_date_start = new GregorianCalendar();
         Calendar calen_date_finish = new GregorianCalendar();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         Date d1 = null;
         Date d2 = null;
         try {

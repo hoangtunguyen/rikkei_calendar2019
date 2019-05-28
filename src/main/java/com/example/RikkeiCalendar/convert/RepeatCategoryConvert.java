@@ -29,7 +29,6 @@ public class RepeatCategoryConvert {
                 return "DAILY";
             case 2:
                 return "WEEKLY";
-
             case 3:
                 return "MONTHLY";
         }

@@ -1,0 +1,177 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Louis full Calendar </title>
+
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div id="title">
+    <h1>Schedule</h1>
+</div>
+<div id="container">
+    <div id="header">
+        <div id="header-left">
+        </div>
+        <div id="header-main">
+            <p id="dateMonthYear">November 2019</p>
+        </div>
+        <div id="header-right">
+            <ul>
+                <li><a href="#">Last Week</a></li>
+                <li><a href="#">Current Week</a></li>
+                <li><a href="#">Next Week</a></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <div id="day">
+                    <p id="word">Sunday</p>
+                    <p id="number">12</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Monday</p>
+                    <p id="number">13</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Tueday</p>
+                    <p id="number">14</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Wednesday</p>
+                    <p id="number">15</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Thursday</p>
+                    <p id="number">16</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Friday</p>
+                    <p id="number">17</p>
+                </div>
+            </div>
+            <div class="col">
+                <div id="day">
+                    <p id="word">Saturday</p>
+                    <p id="number">18</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col ">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col ">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="col">
+                    <div id="task">
+                        <p id="time">8:00 - 8:30</p>
+                        <p id="word">Build platform for server</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="add">
+        <button></button>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var	d=new Date();
+    var month=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    document.getElementById("dateMonthYear").innerHTML=month[d.getMonth()]+" "+d.getFullYear();
+</script>
+
+</body>
+</html>
