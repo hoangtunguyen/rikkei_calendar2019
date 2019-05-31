@@ -12,4 +12,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserEntity,Integer> {
 
     List<UserEntity> findAllByDelFlagNot(int delValue);
+    UserEntity findByUsernameAndPassword(String user, String pass);
+    List<UserEntity> findAllByUsername(String user);
 }

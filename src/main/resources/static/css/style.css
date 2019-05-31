@@ -101,7 +101,10 @@ body {
     background-color: #99c2ff;
     border-right: 1px dashed black;
 }
+.container-fluid .row .col .col{
+    border-right: none;
 
+}
 .container-fluid .row .col #day #word {
     font-size: 25px;
 }
@@ -115,6 +118,13 @@ body {
     margin: 10px -17px 10px -17px;
     background-color: white;
     border: 1px solid white;
+
+    border-radius: 10px;
+    -webkit-border-radius: 25px;
+
+box-shadow: 5px 5px 5px 5px white;
+    -moz-box-shadow: 5px 5px 5px white;
+    -webkit-box-shadow: 5px 3px 5px black;
 }
 
 .container-fluid .row .col #task #time {
@@ -153,4 +163,52 @@ body {
     background-color: white;
 
 }
-	
+.rightModal{
+    width: 50%;
+    height:100%;
+    float: left;
+    /*background-color:red;*/
+
+}
+.rightModal #location img{
+    width: 30px;
+    height:30px;
+    float: left;
+    margin-right: 10px;
+}
+.rightModal #location p{
+    color: #ff6600;
+    font-style: italic;
+}
+.rightModal #text{
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    float: left;
+}
+.rightModal #text-detail{
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 0px;
+    float: left;
+}
+.leftModal{
+    width: 50%;
+    height:100%;
+    float: left;
+    /*background-color:yellow;*/
+}
+.leftModal #group{
+    height: 300px;
+    width: 100%;
+    overflow: scroll;
+}
+.leftModal img{
+    width: 200px;
+    height: 200px;
+    margin-left: 20%;
+    margin-bottom: 20px;
+
+
+}

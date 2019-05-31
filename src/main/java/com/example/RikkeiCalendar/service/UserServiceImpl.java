@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
         }else {
             user = new UserEntity();
         }
+
         user.setName(request.getName());
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
@@ -64,5 +65,16 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(userRequest.getId()).get();
         user.setDelFlag(DEL_VALUE);
         userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity doLogin(String user, String pass) {
+        UserEntity userEntity=userRepository.findByUsernameAndPassword(user,pass);
+        return userEntity;
+    }
+
+    @Override
+    public List<UserEntity> isUsernameExist(String user) {
+        return userRepository.findAllByUsername(user);
     }
 }

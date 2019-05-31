@@ -16,4 +16,6 @@ public interface UserService {
     void updateUserById(UserRequest userRequest);
 
     void deleteUserById(UserRequest userRequest);
+    UserEntity doLogin(String user,String pass);
+    List<UserEntity> isUsernameExist(String user);
 }

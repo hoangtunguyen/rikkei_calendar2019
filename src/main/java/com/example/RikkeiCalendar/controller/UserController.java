@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -42,15 +45,13 @@ public class UserController {
         return "redirect:/viewUser";
     }
     @GetMapping(path = "/deleteUser/{id}")
-    public String deleteUser(@PathVariable int id, @ModelAttribute UserRequest userRequest){
+    public String deleteUser(Model model,@PathVariable int id, @ModelAttribute UserRequest userRequest){
         userRequest.setId(id);
         userService.deleteUserById(userRequest);
+        model.addAttribute("msg","DELETE USER with ID: "+id);
         return "redirect:/viewUser";
     }
-    @GetMapping(path = "/homePage")
-    public String homePage(Model model){
-        return "home_page";
-    }
+
 
     private Map<Integer,String> setRoleDropDownList(){
         List<RoleEntity> roleEntityList = (List<RoleEntity>) roleSerVice.findAll();
@@ -68,14 +69,21 @@ public class UserController {
     public String task(Model model){
         return "task";
     }
-//    private void  setRoleDropDownList(Model model){
-//        List<RoleEntity> roleEntityList = (List<RoleEntity>) roleSerVice.findAll();
-//        if (!roleEntityList.isEmpty()){
-//            Map<Integer, String> RoleMap = new LinkedHashMap<>();
-//            for (RoleEntity roleEntity:roleEntityList){
-//                RoleMap.put(roleEntity.getId(), roleEntity.getRoleName());
-//            }
-//            model.addAttribute("listRole", RoleMap);
-//        }
-//    }
+
+
+    @GetMapping(path = "/login")
+    public String login(Model model){
+        model.addAttribute("users",new UserEntity());
+        return "login";
+    }
+    @PostMapping(path = "/doLogin")
+    public String doLogin(@ModelAttribute UserEntity user,
+                          HttpServletRequest request){
+        UserEntity userEntity=userService.doLogin(user.getUsername(),user.getPassword());
+        HttpSession session=request.getSession();
+        if (userEntity!=null) {
+            return "redirect:/homePage";
+        }
+        return "redirect:/login";
+    }
 }

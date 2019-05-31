@@ -16,13 +16,6 @@ public class UserConvert {
         userRespone.setRoleName(userEntity.getRole().getRoleName());
         userRespone.setRoleId(userEntity.getRole().getId());
         userRespone.setTimestamp(userEntity.getCreatedDate());
-
-//        String day = (new SimpleDateFormat("dd")).format(userEntity.getCreatedDate().getTime());
-//        System.out.println(day);
-//        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss S");
-////        System.out.println(sdf.format(userEntity.getCreatedDate()));
-//        String dayOfWeek = new SimpleDateFormat("u").format(userEntity.getCreatedDate());
-//        System.out.println(dayOfWeek);
         return userRespone;
     }
 }

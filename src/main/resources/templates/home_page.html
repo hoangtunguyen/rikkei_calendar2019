@@ -5,7 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Louis full Calendar </title>
 
     <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
@@ -15,163 +15,147 @@
     <h1>Schedule</h1>
 </div>
 <div id="container">
+
+    <!-- Trigger the modal with a button -->
+    <!-- Modal -->
+
     <div id="header">
         <div id="header-left">
         </div>
         <div id="header-main">
-            <p id="dateMonthYear">November 2019</p>
+            <p id="dateMonthYear" th:text="${monthYear}">..</p>
         </div>
         <div id="header-right">
             <ul>
-                <li><a href="#">Last Week</a></li>
-                <li><a href="#">Current Week</a></li>
-                <li><a href="#">Next Week</a></li>
+                <li><a href="/previousWeek">Last Week</a></li>
+                <li><a href="/currentWeek">Current Week</a></li>
+                <li><a href="/nextWeek">Next Week</a></li>
             </ul>
         </div>
 
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col">
-                <div id="day">
-                    <p id="word">Sunday</p>
-                    <p id="number">12</p>
+
+            <div class="col" th:each="date : ${calendar}">
+                <div th:if="${date.value.date.equals(dayOfMonth)
+                                && date.value.month.equals(month)
+                                && date.value.year.equals(year)}" style="background-color: #0b7dda" id="day">
+                    <p id="word" th:text="${date.value.dayOfWeek}">Sunday</p>
+                    <p id="number" th:text="${date.value.date}">12</p>
                 </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Monday</p>
-                    <p id="number">13</p>
-                </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Tueday</p>
-                    <p id="number">14</p>
-                </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Wednesday</p>
-                    <p id="number">15</p>
-                </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Thursday</p>
-                    <p id="number">16</p>
-                </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Friday</p>
-                    <p id="number">17</p>
-                </div>
-            </div>
-            <div class="col">
-                <div id="day">
-                    <p id="word">Saturday</p>
-                    <p id="number">18</p>
+                <div th:unless="${date.value.date.equals(dayOfMonth)
+                                && date.value.month.equals(month)
+                                && date.value.year.equals(year)}" id="day">
+                    <p id="word" th:text="${date.value.dayOfWeek}">Sunday</p>
+                    <p id="number" th:text="${date.value.date}">12</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
+            <div class="col" th:each="listTask,state: ${listListTaskRepo}">
+                <div class="col" th:each="task,state1:${listTask}">
+                    <div th:onclick="'loadStatusByTaskId('+ *{task.getStatus()} +')'" id="task" data-toggle="modal" th:data-target="'#myModal'+ *{task.getId()}">
+                        <p id="time" th:text="${task.getShortStartTime()}">08:00</p>
+                        <p id="time-end" th:text="${task.getShortFinishTime() }">19/05 08:30</p>
+                        <p class="word" th:text="${task.getTitle()}">Build platform for server </p>
                     </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
+                    <!-- Start Modal -->
+                    <div class="modal fade" th:id="'myModal'+ *{task.getId()}" role="dialog">
+                        <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <form th:action="@{/doSaveTask}" th:object="${taskEntity}" method="post">
+                                    <!--<p style="display:none " th:text="${task.getId()}" ></p>-->
+                                    <input type="text" class="form-control" id="id" th:value="${task.id}"  name="id"/>
+                                    <div class="modal-header">
+
+                                    <h4 class="modal-title" th:text="${task.getTitle()}">Build the function 1 for
+                                        application</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                        <div class="rightModal">
+                                            <div id="location">
+                                                <img th:src="@{/image/icon_place.png}">
+                                                <p th:text="${task.getLocation()}"> Room 101 Master</p>
+                                            </div>
+                                            <div>
+                                                <p id="text">Start:</p>
+                                                <p th:text="${task.getStartTime()}">29 May 2019 18:00:00</p>
+                                            </div>
+                                            <div>
+                                                <p id="text">End:</p>
+                                                <p th:text="${task.getFinishTime()}">03 June 2019 21:00:00</p>
+                                            </div>
+                                            <div>
+                                                <p id="text-detail">Detail:</p>
+                                                <p th:text="${task.getDetail()}"></p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label id="text-detail" for="statuslist">Status</label>
+                                                <select class="form-control" id="statuslist" th:field="*{status}">
+                                                    <option th:each="entry:${statusMap.entrySet()}"
+                                                            th:value="${entry.key}"
+                                                            th:utext="${entry.value}">
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="leftModal">
+                                            <div>
+                                                <img th:src="@{/image/louis.jpg}">
+                                            </div>
+                                            <div id="group">
+                                                <p style="font-weight: bold;">Group</p>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Name</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="user,state:${task.getUserEntities()}">
+                                                        <th scope="row" th:text="${state.count}"></th>
+                                                        <td th:text="${user}">Marks</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col ">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col ">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="col">
-                    <div id="task">
-                        <p id="time">8:00 - 8:30</p>
-                        <p id="word">Build platform for server</p>
-                    </div>
+                    <!-- End modal -->
                 </div>
             </div>
         </div>
     </div>
     <div class="add">
-        <button></button>
+        <button onclick="window.location.href='/task'"></button>
     </div>
 
 </div>
-<script type="text/javascript">
-    var	d=new Date();
-    var month=["January","February","March","April","May","June","July","August","September","October","November","December"];
-    document.getElementById("dateMonthYear").innerHTML=month[d.getMonth()]+" "+d.getFullYear();
-</script>
+<script>
+    function loadStatusByTaskId(id) {
+        var status;
+        status=parseInt(id);
+        console.log("id: "+status)
+        document.getElementById("statuslist").value=status;
+    }
 
+</script>
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.example.RikkeiCalendar.service;
 import com.example.RikkeiCalendar.entity.*;
 import com.example.RikkeiCalendar.repository.*;
 import com.example.RikkeiCalendar.request.BigTaskRequest;
+import com.example.RikkeiCalendar.request.TaskRequestOnlyStatus;
+import com.example.RikkeiCalendar.respones.TaskReponse;
 import com.example.RikkeiCalendar.test.BigFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class BigTaskServiceImpl implements BigTaskService {
     BigUserTaskRepository bigUserTaskRepository;
     @Autowired
     TaskRepository taskRepository;
+    @Autowired
+    UserTaskRepository userTaskRepository;
+
     @Override
     public void addTask(BigTaskRequest bigTaskRequest) {
         RepeatCatetoryEntity repeat = new RepeatCatetoryEntity();
@@ -68,28 +73,36 @@ public class BigTaskServiceImpl implements BigTaskService {
         addSupTask(bigTaskEntity1);
 
     }
-    public void addSupTask(BigTaskEntity bigTaskEntity){
+
+    @Override
+    public void saveTask(TaskRequestOnlyStatus request) {
+        TaskEntity taskEntity=taskRepository.findById(request.getId()).get();
+        taskEntity.setStatus(request.getStatus());
+        taskRepository.save(taskEntity);
+    }
+
+    public void addSupTask(BigTaskEntity bigTaskEntity) {
         TaskEntity taskEntity;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 
-        String startRepeat=sdf.format(bigTaskEntity.getStartTime());
-        String finishRepeat=sdf.format(bigTaskEntity.getRepeatCatetoryEntity().getFinishTimeRepeat());
-        int choiceTypeRepeat=bigTaskEntity.getRepeatCatetoryEntity().getCategoryName();
-        BigFunction bigFunction=new BigFunction();
-        List<Integer> repeatWeek=new ArrayList<>();
-        RepeatCatetoryEntity repeatCatetoryEntities=bigTaskEntity.getRepeatCatetoryEntity();
-        List<CategoryTypeEntity>categoryTypeEntities=categoryTypeRepository.findAllByRepeatCatetoryEntity(repeatCatetoryEntities);
-        for (CategoryTypeEntity categoryTypeEntity:categoryTypeEntities){
+        String startRepeat = sdf.format(bigTaskEntity.getStartTime());
+        String finishRepeat = sdf.format(bigTaskEntity.getRepeatCatetoryEntity().getFinishTimeRepeat());
+        int choiceTypeRepeat = bigTaskEntity.getRepeatCatetoryEntity().getCategoryName();
+        BigFunction bigFunction = new BigFunction();
+        List<Integer> repeatWeek = new ArrayList<>();
+        RepeatCatetoryEntity repeatCatetoryEntities = bigTaskEntity.getRepeatCatetoryEntity();
+        List<CategoryTypeEntity> categoryTypeEntities = categoryTypeRepository.findAllByRepeatCatetoryEntity(repeatCatetoryEntities);
+        for (CategoryTypeEntity categoryTypeEntity : categoryTypeEntities) {
             repeatWeek.add(categoryTypeEntity.getTypeRepeatEntity().getType_name());
         }
-        List<String> repeatTime =bigFunction.repeatBy(startRepeat,finishRepeat,repeatWeek,choiceTypeRepeat);
+        List<String> repeatTime = bigFunction.repeatBy(startRepeat, finishRepeat, repeatWeek, choiceTypeRepeat);
 
         Timestamp time;
-        for (String repeat:repeatTime){
-            taskEntity=new TaskEntity();
+        for (String repeat : repeatTime) {
+            taskEntity = new TaskEntity();
             try {
-                time=Timestamp.valueOf(repeat);
+                time = Timestamp.valueOf(repeat);
                 taskEntity.setStartTime(time);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,12 +116,27 @@ public class BigTaskServiceImpl implements BigTaskService {
             taskEntity.setAllDay(bigTaskEntity.isAllDay());
             taskEntity.setBigTaskEntity(bigTaskEntity);
             taskEntity.setDelFlag(bigTaskEntity.getDelFlag());
-            taskEntity.setUserTaskEntities(bigTaskEntity.getUserTaskEntities());
-            taskRepository.save(taskEntity);
+
+            UserTaskEntity userTaskEntity;
+            List<BigUserTaskEntity> bigUserTaskEntities=bigUserTaskRepository.findAllByBigTaskEntity(bigTaskEntity);
+            TaskEntity taskEntity1= taskRepository.save(taskEntity);
+            for (BigUserTaskEntity bigUserTaskEntity: bigUserTaskEntities){
+                userTaskEntity=new UserTaskEntity();
+                userTaskEntity.setTaskEntity(taskEntity1);
+                userTaskEntity.setUserInTask(bigUserTaskEntity.getUserEntity());
+                userTaskRepository.save(userTaskEntity);
+            }
         }
-
-
-
-
     }
+
+    @Override
+    public List<TaskEntity> getTasks() {
+        return taskRepository.findAll();
+    }
+
+    @Override
+    public List<TaskEntity> findAllByStartTimeGreaterThanEqualAndStartTimeLessThan(Timestamp startTime,Timestamp maxTime) {
+        return taskRepository.findAllByStartTimeGreaterThanEqualAndStartTimeLessThan(startTime,maxTime);
+    }
+
 }
