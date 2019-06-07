@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +46,10 @@ public class UserController {
         return "redirect:/viewUser";
     }
     @GetMapping(path = "/deleteUser/{id}")
-    public String deleteUser(Model model,@PathVariable int id, @ModelAttribute UserRequest userRequest){
+    public String deleteUser(RedirectAttributes model, @PathVariable int id, @ModelAttribute UserRequest userRequest){
         userRequest.setId(id);
         userService.deleteUserById(userRequest);
-        model.addAttribute("msg","DELETE USER with ID: "+id);
+//        model.addFlashAttribute("msg","Success");
         return "redirect:/viewUser";
     }
 
@@ -65,10 +66,6 @@ public class UserController {
         }
         return map;
     }
-    @GetMapping(path = "/task")
-    public String task(Model model){
-        return "task";
-    }
 
 
     @GetMapping(path = "/login")
@@ -81,6 +78,7 @@ public class UserController {
                           HttpServletRequest request){
         UserEntity userEntity=userService.doLogin(user.getUsername(),user.getPassword());
         HttpSession session=request.getSession();
+        session.setAttribute("userInfor",userEntity);
         if (userEntity!=null) {
             return "redirect:/homePage";
         }

@@ -27,6 +27,7 @@
         </div>
         <div id="header-right">
             <ul>
+                <!--<li><a href="#" th:text="${session.userInfor.name}"></a></li>-->
                 <li><a href="/previousWeek">Last Week</a></li>
                 <li><a href="/currentWeek">Current Week</a></li>
                 <li><a href="/nextWeek">Next Week</a></li>
@@ -93,9 +94,10 @@
                                                 <p id="text-detail">Detail:</p>
                                                 <p th:text="${task.getDetail()}"></p>
                                             </div>
+
                                             <div class="form-group">
-                                                <label id="text-detail" for="statuslist">Status</label>
-                                                <select class="form-control" id="statuslist" th:field="*{status}">
+                                                <label id="text-detail" for="statusList">Status</label>
+                                                <select class="form-control" id="statusList" th:field="*{status}">
                                                     <option th:each="entry:${statusMap.entrySet()}"
                                                             th:value="${entry.key}"
                                                             th:utext="${entry.value}">
@@ -150,10 +152,11 @@
 </div>
 <script>
     function loadStatusByTaskId(id) {
-        var status;
-        status=parseInt(id);
-        console.log("id: "+status)
-        document.getElementById("statuslist").value=status;
+        var status=id;
+        // status=parseInt(id);
+        console.log("id: "+status);
+        console.log("Type: "+typeof status);
+        document.getElementById("statusList").value=status  ;
     }
 
 </script>

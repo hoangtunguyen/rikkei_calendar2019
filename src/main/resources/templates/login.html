@@ -26,4 +26,14 @@
 		</form>
 	</div>
 </body>
+<script>
+	$(document).ready(function(){
+		$("input").focus(function(){
+			$(this).css("background-color", "#ffffff");
+		});
+		$("input").blur(function(){
+			$(this).css("background-color", "#fbfff8");
+		});
+	});
+</script>
 </html>

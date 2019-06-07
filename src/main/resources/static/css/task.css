@@ -113,7 +113,7 @@
 }
 #content-task-middle #image-task img{
 	width: 100%	;
-	min-height: 300px;
+	height: 300px;
 }
 #content-task-middle #repeat-task .form-check-inline .form-check-label{
 	margin-right:20px;

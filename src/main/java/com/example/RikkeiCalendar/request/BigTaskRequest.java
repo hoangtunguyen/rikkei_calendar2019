@@ -10,21 +10,21 @@ public class BigTaskRequest {
     private String title;
     private String detail;
     private String location;
-    private Timestamp startTime;
-    private Timestamp finishTime;
+    private String startTime;
+    private String finishTime;
     private String imageURL;
     private boolean allDay;
     private int status;
     private int taskRepeatId;
     private List<Integer> userId;
     private List<Integer> daysOfRepeat;
-    private Timestamp finishRepeat;
+    private String finishRepeat;
     private int cateRepeat;
 
     public BigTaskRequest() {
     }
 
-    public BigTaskRequest(int id, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, int taskRepeatId, List<Integer> userId, List<Integer> daysOfRepeat, Timestamp finishRepeat, int cateRepeat) {
+    public BigTaskRequest(int id, String title, String detail, String location, String startTime, String finishTime, String imageURL, boolean allDay, int status, int taskRepeatId, List<Integer> userId, List<Integer> daysOfRepeat, String finishRepeat, int cateRepeat) {
         this.id = id;
         this.title = title;
         this.detail = detail;
@@ -73,19 +73,19 @@ public class BigTaskRequest {
         this.location = location;
     }
 
-    public Timestamp getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getFinishTime() {
+    public String getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Timestamp finishTime) {
+    public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -137,11 +137,11 @@ public class BigTaskRequest {
         this.daysOfRepeat = daysOfRepeat;
     }
 
-    public Timestamp getFinishRepeat() {
+    public String getFinishRepeat() {
         return finishRepeat;
     }
 
-    public void setFinishRepeat(Timestamp finishRepeat) {
+    public void setFinishRepeat(String finishRepeat) {
         this.finishRepeat = finishRepeat;
     }
 

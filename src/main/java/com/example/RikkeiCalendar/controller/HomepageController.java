@@ -282,7 +282,7 @@ public class HomepageController {
 
     private Map<Integer,String> setMapStatus(){
         Map<Integer,String> map=new HashMap<Integer, String>();
-                map.put(1, "Open");
+                map.put(1,"Open");
                 map.put(2,"Progress");
                 map.put(3,"Done");
                 map.put(4,"Delay");

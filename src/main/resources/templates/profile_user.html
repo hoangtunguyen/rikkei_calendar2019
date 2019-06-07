@@ -43,7 +43,7 @@
 <div class="container">
     <div id="main">
         <div id="header">
-            <h2>Users Information Management System</h2>
+            <h2 >Users Information Management System</h2>
         </div>
         <div id="main-left">
             <h2>User</h2>
@@ -82,9 +82,10 @@
         </div>
         <div id="main-right">
             <div class="header">
+                <div th:if="${msg}"/>
                 <form class="example" action="/action_page.php">
-                    <button type="submit"><i class="fa fa-search">Search</i></button>
-                    <input type="text" placeholder="Search.." name="search">
+                    <!--<button type="submit"><i class="fa fa-search">Search</i></button>-->
+                    <input id="searchInput" type="text" placeholder="Search.." name="search">
 
                 </form>
             </div>
@@ -138,7 +139,7 @@
 <p style="font-size: 100px" id="demo"></p>
 <script type="text/javascript">
     function loadUserById(id) {
-        console.log(id);
+
         $('.table tbody').on('click','.btn-info',function () {
             var currow= $(this).closest('tr');
             var col1=currow.find('td:eq(0)').html();
@@ -148,6 +149,8 @@
             var col5=currow.find('td:eq(4)').text();
 
             col1=parseInt(col1);
+
+            console.log(col5);
             document.getElementById("id").value=col1;
             document.getElementById("fullname").value=col2;
             document.getElementById("username").value=col3;
@@ -160,6 +163,16 @@
     }
 </script>
 <script src="../static/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 <script>
 
 </script>

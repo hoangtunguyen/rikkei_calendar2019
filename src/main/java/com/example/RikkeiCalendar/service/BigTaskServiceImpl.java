@@ -38,9 +38,11 @@ public class BigTaskServiceImpl implements BigTaskService {
 
     @Override
     public void addTask(BigTaskRequest bigTaskRequest) {
+
         RepeatCatetoryEntity repeat = new RepeatCatetoryEntity();
         repeat.setCategoryName(bigTaskRequest.getCateRepeat());
-        repeat.setFinishTimeRepeat(bigTaskRequest.getFinishRepeat());
+        repeat.setFinishTimeRepeat(convertStringToTimestamp(bigTaskRequest.getFinishRepeat()));
+
         repeat.setDel_flag(CREATE_FLAG);
         RepeatCatetoryEntity repeatCate = repeatCategoryRepository.save(repeat);
         CategoryTypeEntity cate;
@@ -58,8 +60,8 @@ public class BigTaskServiceImpl implements BigTaskService {
         bigTaskEntity.setDetail(bigTaskRequest.getDetail());
         bigTaskEntity.setLocation(bigTaskRequest.getLocation());
         bigTaskEntity.setAllDay(bigTaskRequest.isAllDay());
-        bigTaskEntity.setStartTime(bigTaskRequest.getStartTime());
-        bigTaskEntity.setFinishTime(bigTaskRequest.getFinishTime());
+        bigTaskEntity.setStartTime(convertStringToTimestamp(bigTaskRequest.getStartTime()));
+        bigTaskEntity.setFinishTime(convertStringToTimestamp(bigTaskRequest.getStartTime()));
         bigTaskEntity.setImageURL(bigTaskRequest.getImageURL());
         bigTaskEntity.setStatus(bigTaskRequest.getStatus());
         bigTaskEntity.setRepeatCatetoryEntity(repeatCate);
@@ -138,5 +140,16 @@ public class BigTaskServiceImpl implements BigTaskService {
     public List<TaskEntity> findAllByStartTimeGreaterThanEqualAndStartTimeLessThan(Timestamp startTime,Timestamp maxTime) {
         return taskRepository.findAllByStartTimeGreaterThanEqualAndStartTimeLessThan(startTime,maxTime);
     }
-
+    public Timestamp convertStringToTimestamp(String strDate){
+        SimpleDateFormat datetimeFormatter1 = new SimpleDateFormat(
+                "yyyy-MM-dd hh:mm");
+        Date date=new Date();
+        try {
+            date=datetimeFormatter1.parse(strDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timestamp timestamp=new Timestamp(date.getTime());
+        return timestamp;
+    }
 }

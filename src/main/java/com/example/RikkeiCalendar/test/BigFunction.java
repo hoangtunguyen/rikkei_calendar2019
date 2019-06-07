@@ -179,6 +179,9 @@ public class BigFunction {
                     calen_date_start.add(Calendar.YEAR, 1);
                 }
                 break;
+            case 0:
+                result.add(sdf.format(calen_date_start.getTime()));
+                break;
             default:
                 System.out.println("Erroe");
         }
