@@ -1,7 +1,5 @@
 package com.example.RikkeiCalendar.entity;
 
-
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +9,8 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-@Table(name = "task")
-public class TaskEntity extends Auditable<String> {
+@Table(name = "big_task")
+public class BigTaskEntity extends Auditable<String>  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -42,20 +40,25 @@ public class TaskEntity extends Auditable<String> {
     @Column(name = "status",length = 50)
     private int status;
 
+    @OneToMany(mappedBy = "bigTaskEntity")
+    private List<TaskEntity> taskEntities;
+
     @OneToMany(mappedBy = "taskEntity")
     private List<UserTaskEntity> userTaskEntities;
 
-    @ManyToOne
-    @JoinColumn(name = "big_task_id")
-    private BigTaskEntity bigTaskEntity;
+    @OneToMany(mappedBy = "bigTaskEntity")
+    private List<BigUserTaskEntity> bigUserTaskEntities;
+    @OneToOne
+    @JoinColumn(name = "repeat_id",unique = true)
+    private RepeatCatetoryEntity repeatCatetoryEntity;
 
     @Column(name = "del_flag",length = 10)
     private int delFlag;
 
-    public TaskEntity() {
+    public BigTaskEntity() {
     }
 
-    public TaskEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, List<UserTaskEntity> userTaskEntities, BigTaskEntity bigTaskEntity, int delFlag) {
+    public BigTaskEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String title, String detail, String location, Timestamp startTime, Timestamp finishTime, String imageURL, boolean allDay, int status, List<TaskEntity> taskEntities, List<UserTaskEntity> userTaskEntities, List<BigUserTaskEntity> bigUserTaskEntities, RepeatCatetoryEntity repeatCatetoryEntity, int delFlag) {
         super(createdBy, createdDate, updatedBy, updatedDate);
         this.title = title;
         this.detail = detail;
@@ -65,8 +68,10 @@ public class TaskEntity extends Auditable<String> {
         this.imageURL = imageURL;
         this.allDay = allDay;
         this.status = status;
+        this.taskEntities = taskEntities;
         this.userTaskEntities = userTaskEntities;
-        this.bigTaskEntity = bigTaskEntity;
+        this.bigUserTaskEntities = bigUserTaskEntities;
+        this.repeatCatetoryEntity = repeatCatetoryEntity;
         this.delFlag = delFlag;
     }
 
@@ -142,6 +147,14 @@ public class TaskEntity extends Auditable<String> {
         this.status = status;
     }
 
+    public List<TaskEntity> getTaskEntities() {
+        return taskEntities;
+    }
+
+    public void setTaskEntities(List<TaskEntity> taskEntities) {
+        this.taskEntities = taskEntities;
+    }
+
     public List<UserTaskEntity> getUserTaskEntities() {
         return userTaskEntities;
     }
@@ -150,12 +163,20 @@ public class TaskEntity extends Auditable<String> {
         this.userTaskEntities = userTaskEntities;
     }
 
-    public BigTaskEntity getBigTaskEntity() {
-        return bigTaskEntity;
+    public List<BigUserTaskEntity> getBigUserTaskEntities() {
+        return bigUserTaskEntities;
     }
 
-    public void setBigTaskEntity(BigTaskEntity bigTaskEntity) {
-        this.bigTaskEntity = bigTaskEntity;
+    public void setBigUserTaskEntities(List<BigUserTaskEntity> bigUserTaskEntities) {
+        this.bigUserTaskEntities = bigUserTaskEntities;
+    }
+
+    public RepeatCatetoryEntity getRepeatCatetoryEntity() {
+        return repeatCatetoryEntity;
+    }
+
+    public void setRepeatCatetoryEntity(RepeatCatetoryEntity repeatCatetoryEntity) {
+        this.repeatCatetoryEntity = repeatCatetoryEntity;
     }
 
     public int getDelFlag() {

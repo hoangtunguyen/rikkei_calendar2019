@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TASK</title>
+    <!--<link rel="stylesheet" th:href="@{css/style.css}" />-->
+    <!--<link rel="stylesheet" th:href="@{../css/task.css}" />-->
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}" type="text/css"/>
+    <link rel="stylesheet" href="../static/css/task1.css" th:href="@{../css/task1.css}" type="text/css"/>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<body>
+<div id="title">
+    <h1>TASK</h1>
+</div>
+<div id="container">
+    <form th:action="@{/addTask}" th:object="${bigTask}" method="post" class="form-inline">
+
+        <div id="header-task">
+            <button type="submit" class="btn btn-success mb-2">Save</button>
+            <button type="submit" class="btn btn-danger mb-2">Delete</button>
+            <button type="submit" class="btn btn-secondary mb-2">Cancel</button>
+
+        </div>
+        <div id="content-task-left">
+            <h2>Detail</h2>
+
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="input-event-name" id="id" th:field="*{title}" placeholder="Event name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input class="input-location" type="text" placeholder="Location" th:field="*{location}">
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <p class="p">Start Time</p>
+                    <input id="sName1total" class="input-bg-time" type="hidden" th:field="*{startTime}">
+                    <input id="sName1" class="input-bg-time" type="date" disabled="disabled">
+                    <input id="sName2" class="input-bg-time" type="time" disabled="disabled">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="p">Finish Time</p>
+                    <input id="sName2total" class="input-bg-time" type="hidden" th:field="*{finishTime}">
+                    <input id="sName3" class="input-bg-time" type="date" disabled="disabled">
+                    <input id="sName4" class="input-bg-time" type="time" disabled="disabled">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-check mb-2 mr-sm-2">
+                    <label class="form-check-label">
+                        <input id="check-box" checked class="form-check-input" type="checkbox">
+                        <label for="check-box" style="margin-top: 30px; margin-left:10px">ALL DAY: (default: start time
+                            and finish time of the task will be all day, if you wanna change the time, please click the
+                            checkbox</label>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <textarea id="subject" name="subject" placeholder="Write something.." th:field="*{detail}"></textarea>
+                </div>
+            </div>
+        </div>
+        <div id="content-task-middle">
+            <div id="repeat-task">
+                <h2>Repeat</h2>
+                <div class="row" id="type">
+                    <div class="col-sm-2">
+                        <p>Type </p>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <select class="form-control" onchange="repeatFunc()" id="valueRepeat">
+                                <option>NONE</option>
+                                <option>DAILY</option>
+                                <option>WEEKLY</option>
+                                <option>MONTHLY</option>
+                                <option>YEARLY</option>
+                            </select>
+                            <!--<select class="form-control" name="typesRepeat" onchange="repeatFunc()" id="valueRepeat" > >-->
+                                <!--<option th:each="entry:${repeatCate.entrySet()}"-->
+                                        <!--th:value="${entry.key}"-->
+                                        <!--th:utext="${entry.value}">-->
+                                <!--</option>-->
+                            <!--</select>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="end">
+                    <div class="col-sm-2">
+                        <p>End: </p>
+                    </div>
+                    <div class="col-sm-8">
+                        <input id="input-time" type="date" class="form-control">
+                    </div>
+                </div>
+                <div class="row" id="repeat">
+                    <div class="row">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Sun
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Mon
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Tue
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Wed
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Thu
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Fri
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">Sat
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                <input type="file" id="inp">
+                            </span>
+                            <!--<p id="b64" ></p>-->
+                                <input type="hidden" id="b64"></p>
+                        </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="image-task">
+                <img id="img" th:src="@{../image/calendarbackground.png}">
+            </div>
+        </div>
+        <div id="content-task-right">
+            <h2>Invite People</h2>
+            <!-- <form action="javascript:addBranch1()" class="form-inline md-form mr-auto mb-4"> -->
+            <input id="tags" class="iputSearch" type="text" placeholder="Search" aria-label="Search">
+            <button type="button" onclick="addBranch1()">+</button>
+            <!-- </form> -->
+            <table id="tb-invite" class="table table-hover" border="1px" width="100%">
+                <tbody id="bodyId">
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+<script>
+    var x=document.getElementById("valueRepeat") .value;
+    var repeat=document.getElementById("repeat");
+    var end=document.getElementById("end");
+    if (x==="NONE"){
+        repeat.style.visibility='hidden';
+        end.style.visibility='hidden';
+    }else if (x==="WEEKLY") {
+        repeat.style.visibility='visible';
+        end.style.visibility='visible';
+    }else {
+        repeat.style.visibility='hidden';
+        end.style.visibility='visible';
+
+    }
+    function repeatFunc() {
+        var x=document.getElementById("valueRepeat") .value;
+        var repeat=document.getElementById("repeat");
+        var end=document.getElementById("end");
+        if (x==="NONE"){
+            repeat.style.visibility='hidden';
+            end.style.visibility='hidden';
+        }else if (x==="WEEKLY") {
+            repeat.style.visibility='visible';
+            end.style.visibility='visible';
+        }else {
+            repeat.style.visibility='hidden';
+            end.style.visibility='visible';
+
+        }
+    }
+
+
+</script>
+<script>
+    function covertDateToString(date){
+        var year=date.getFullYear();
+        var month=(date.getMonth()).toString();
+        month=month.length>1 ? month : '0'+month;
+        var day=date.getDate().toString();
+        day=day.length>1 ? day : '0' +day;
+        var hour=(1+date.getHours()).toString();
+        hour=hour.length>1 ?hour : '0'+hour;
+        var minute=date.getMinutes().toString();
+        minute=minute.length>1 ? minute :'0'+minute;
+        var result=year+"-"+month+"-"+day+" "+hour+":"+minute;
+        return result;
+    }
+    $(document).ready(function(){
+        $("form").submit(function(){
+            var timefrom = new Date();
+            temp = $('#sName2').val().split(":");
+            timefrom.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+            timefrom.setMinutes(parseInt(temp[1]));
+
+            var datefrom= $('#sName1').val().split("-");
+            timefrom.setFullYear(parseInt(datefrom[0]));
+            timefrom.setMonth(parseInt(datefrom[1]));
+            timefrom.setDate(parseInt(datefrom[2]));
+            document.getElementById("sName1total").value=covertDateToString(timefrom);
+            var timeto = new Date();
+            var dateto= $('#sName3').val().split("-");
+            temp = $('#sName4').val().split(":");
+            timeto.setHours((parseInt(temp[0]) - 1 + 24) % 24);
+            timeto.setMinutes(parseInt(temp[1]));
+            timeto.setFullYear(parseInt(dateto[0]));
+            timeto.setMonth(parseInt(dateto[1]));
+            timeto.setDate(parseInt(dateto[2]));
+            document.getElementById("sName2total").value=covertDateToString(timeto);
+            if (timeto < timefrom){
+                alert('Start time should be smaller than End time! \nPlease input time again');
+                return false;
+            }
+        });
+    });
+</script>
+<script>
+    function readFile() {
+        if (this.files && this.files[0]) {
+            var FR= new FileReader();
+            FR.addEventListener("load", function(e) {
+                document.getElementById("img").src       = e.target.result;
+                document.getElementById("b64").innerHTML = e.target.result;
+            });
+            FR.readAsDataURL( this.files[0] );
+        }
+    }
+    document.getElementById("inp").addEventListener("change", readFile);
+</script>
+<script>
+    var availableTags1 = [
+        "Mr Hieu Auto",
+        "HoangTU",
+        "Nguyen",
+        "BASIC",
+        "C",
+        "C++",
+        "Clojure",
+        "COBOL",
+        "ColdFusion",
+        "Erlang",
+        "Fortran",
+        "Groovy",
+        "Haskell",
+        "Java",
+        "JavaScript",
+        "Lisp",
+        "Perl",
+        "PHP",
+        "Ruby",
+        "Python",
+        "Scala",
+        "Scheme"
+    ];
+    $(function () {
+        $("#tags").autocomplete({
+            source: availableTags1
+        });
+    });
+    var result,
+        array = [];
+    function showData() {
+        result = '';
+        for (var i = 0; i < array.length; i++) {
+            result += '<tr>' +
+                '<td class="col-sm-5">' + array[i] + '</td>' +
+                '<td>' + '<button onclick="deleteBranch(' + i + ')">&chi;</button>' + '</td>' +
+                '</tr>';
+        }
+        document.getElementById("bodyId").innerHTML = result;
+    }
+
+    function addBranch1() {
+        var branchName = document.getElementById("tags").value;
+        var isExist = false;
+        var isCorrect = false;
+        for (let i = 0; i < array.length; i++) {
+            if (branchName == array[i]) {
+                isExist = true;
+                break;
+            }
+        }
+        for (let j = 0; j < availableTags1.length; j++) {
+            if (branchName == availableTags1[j]) {
+                isCorrect = true;
+                break;
+            }
+        }
+        if (isExist === false && isCorrect == true) {
+            array.push(branchName);
+        }
+        document.getElementById("tags").value = "";
+        showData();
+    }
+
+    function deleteBranch(position) {
+        result = '';
+        console.log(typeof (position));
+        console.log(position);
+        array.splice(position, 1);
+        console.log(array);
+        showData();
+
+    }
+
+
+</script>
+<script>
+    $(document).ready(function () {
+        $("#check-box").click(function () {
+            !$("#sName1").attr('disabled', !$("#sName1").attr('disabled'));
+            !$("#sName2").attr('disabled', !$("#sName2").attr('disabled'));
+            !$("#sName3").attr('disabled', !$("#sName3").attr('disabled'));
+            !$("#sName4").attr('disabled', !$("#sName4").attr('disabled'));
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Information</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{css/profile_user.css}"/>
+
+
+</head>
+<body>
+<!-- Nav  left bar 25 lines -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Rikkei</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Page 1</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+        </ul>
+
+    </div>
+</nav>
+<div style="margin-top: 50px" id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">HomePage</a>
+    <a href="#">Services</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
+</div>
+<div class="container">
+    <div id="main">
+        <div id="header">
+            <h2 >Users Information Management System</h2>
+        </div>
+        <div id="main-left">
+            <h2>User</h2>
+            <form th:action="@{/doSaveUser}" th:object="${user}" method="post">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" id="id" th:field="*{id}" name="id">
+                </div>
+                <div class="form-group">
+                    <label for="fullname">Fullname:</label>
+                    <input type="text" class="form-control" id="fullname" placeholder="Enter Fullname"
+                           th:field="*{name}" name="fullname">
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username"
+                           th:field="*{username}" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter password"
+                           th:field="*{password}" name="password">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Role Name</label>
+                    <select class="form-control" id="exampleFormControlSelect1" th:field="*{roleId}">
+                        <option th:each="entry:${roleList.entrySet()}"
+                                th:value="${entry.key}"
+                                th:utext="${entry.value}">
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div id="main-right">
+            <div class="header">
+                <div th:if="${msg}"/>
+                <form class="example" action="/action_page.php">
+                    <!--<button type="submit"><i class="fa fa-search">Search</i></button>-->
+                    <input id="searchInput" type="text" placeholder="Search.." name="search">
+
+                </form>
+            </div>
+            <table class="table table-hover ">
+                <thead>
+                <tr class="bg-primary">
+                    <th scope="col">#</th>
+                    <th scope="col">Full Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Role Name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col" class="table-danger">Delete</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user1,state: ${users}">
+                    <th scope="row" th:utext="${state.count}">..</th>
+                    <td id="ids" style="display: none" th:utext="${user1.id}">name</td>
+                    <td id="nameId" th:utext="${user1.name}">name</td>
+                    <td id="usernameId" th:utext="${user1.username}">username</td>
+                    <td id="passwordId" th:utext="${user1.password}">password</td>
+                    <td id="roleId" style="display: none" th:utext="${user1.roleId}"></td>
+
+                    <td  th:utext="${user1.roleName}">rolename</td>
+
+                    <td>
+                        <button type="button" class="btn btn-info" th:onclick="'loadUserById('+ *{user1.id} +')'">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger"><a style="color: white" th:href="'deleteUser/'+ *{user1.id} +''">Delete</a></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="pagination">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<p style="font-size: 100px" id="demo"></p>
+<script type="text/javascript">
+    function loadUserById(id) {
+
+        $('.table tbody').on('click','.btn-info',function () {
+            var currow= $(this).closest('tr');
+            var col1=currow.find('td:eq(0)').html();
+            var col2=currow.find('td:eq(1)').text();
+            var col3=currow.find('td:eq(2)').text();
+            var col4=currow.find('td:eq(3)').text();
+            var col5=currow.find('td:eq(4)').text();
+
+            col1=parseInt(col1);
+
+            console.log(col5);
+            document.getElementById("id").value=col1;
+            document.getElementById("fullname").value=col2;
+            document.getElementById("username").value=col3;
+            document.getElementById("password").value=col4;
+            document.getElementById("password").value=col4;
+            document.getElementById("exampleFormControlSelect1").value=col5;
+            // console.log(typeof col1);
+
+        })
+    }
+</script>
+<script src="../static/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#searchInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<script>
+
+</script>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+        document.body.style.backgroundColor = "white";
+    }
+</script>
+
+</body>
+<div class="footer">
+    <p>© 2018 Copyright:Nguyen Hoang Tu</p>
+</div>
+</html>

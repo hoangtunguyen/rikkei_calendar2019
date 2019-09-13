@@ -1,0 +1,63 @@
+body{
+	background-image: url('../image/calendarbackground.png');
+}
+.areaLogin{
+	width: 450px;
+	height: 600px;
+	margin-left: 35%;
+	margin-top: 5%;
+	vertical-align: middle;
+
+	/*background-image: linear-gradient(to top, #b3d9ff, #5691c8);*/
+	/*background-color: white;*/
+	border-radius: 15px;
+	-webkit-border-radius: 25px;
+
+	box-shadow: 5px 5px 5px 10px  black;
+	-moz-box-shadow: 5px 5px 5px 5px black;
+	-webkit-box-shadow: 5px 5px 5px 10px #d9d9d9;
+
+	background-color: transparent;
+}
+
+
+.areaLogin h2{
+	text-align: center;
+	color: white;
+	font-size:70px;
+	font-weight: 100;
+}
+
+.areaLogin .form-group #userId{
+	/*background: url('../image/icon_user.png') no-repeat 5px;*/
+
+}
+.areaLogin .form-group input{
+
+	margin-left: 5%;
+	width: 90%;
+	margin-bottom: 40px;
+	border-radius: 25px;
+	font-size: 14px;
+	height: 50px;
+	opacity: 0.8;
+	color: black;
+}
+.areaLogin .form-group #passId{
+	/*background: url('../image/icon_password.png') no-repeat 5px;*/
+}
+.areaLogin img{
+	width: 250px;
+	margin-left: 25%;
+	margin-top: 20px;
+	margin-bottom: 80px;
+	display: inline-block;
+}
+#button-submit{
+	font-size: 17px;
+	font-weight: 600;
+	width: 100px;
+	height: 55px;
+	border-radius: 40px;
+	margin-left: 40%;
+}

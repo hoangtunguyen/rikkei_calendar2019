@@ -1,0 +1,214 @@
+body {
+    background-image: url("../image/calendarbackground.png");
+}
+#title {
+    min-height: 101px;
+}
+
+#title h1 {
+    font: 400 130px/1.3 'Lobster Two', Helvetica, sans-serif;
+    color: #f1f1f1;
+    text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0, 0, 0, 0.15);
+    text-align: center;
+
+}
+
+#container {
+    width: 1400px;
+    margin: 0px auto;
+    min-height: 1000px;
+    background-color: #DDDDDD;
+    border: 2px solid #333;
+    overflow: hidden
+}
+
+#header {
+    width: 100%;
+    background-color: #ffffff;
+    height: 80px;
+}
+
+#header #header-left {
+    float: left;
+    height: 100%;
+    width: 15%;
+}
+
+#header #header-main {
+    width: 55%;
+    height: 100%;
+    float: left;
+    /*background-color: yellow;*/
+    height: 100%;
+}
+
+#header #header-main p {
+    text-align: center;
+    font-size: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#header #header-right {
+    width: 30%;
+    float: right;
+    /*background-color: #333;*/
+    height: 100%;
+}
+
+#header #header-right ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 10px;
+    overflow: hidden;
+    padding: 0px 0px 0px 10px;
+}
+
+#header #header-right ul li {
+    float: left;
+    margin-left: 10px;
+    /*margin-right: 10px;*/
+}
+
+#header #header-right ul li a {
+    background-color: #333;
+    display: block;
+    margin-top: 5px;
+    padding: 14px 16px;
+    text-decoration-line: none;
+    color: white;
+    text-align: center;
+    /*text-transform: uppercase;*/
+    border: 1px solid #f1f1f1;
+}
+
+#header #header-right ul li a:hover {
+    background-color: black;
+
+}
+
+.container-fluid .row .col #day {
+    background-color: #333;
+    margin-left: -15px;
+    margin-right: -15px;
+    height: 100px;
+    border: 1px solid white;
+    text-align: center;
+    color: white;
+
+}
+
+.container-fluid .row .col {
+    background-color: #99c2ff;
+    border-right: 1px dashed black;
+}
+.container-fluid .row .col .col{
+    border-right: none;
+
+}
+.container-fluid .row .col #day #word {
+    font-size: 25px;
+}
+
+.container-fluid .row .col #day #number {
+    margin-top: -20px;
+    font-size: 40px;
+}
+
+.container-fluid .row .col #task {
+    margin: 10px -17px 10px -17px;
+    background-color: white;
+    border: 1px solid white;
+
+    border-radius: 10px;
+    -webkit-border-radius: 25px;
+
+box-shadow: 5px 5px 5px 5px white;
+    -moz-box-shadow: 5px 5px 5px white;
+    -webkit-box-shadow: 5px 3px 5px black;
+}
+
+.container-fluid .row .col #task #time {
+    background: url("../image/icon_clock.png") no-repeat 3px;
+    margin-top: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.container-fluid .row .col #task #word {
+    padding-left: 10px;
+    margin-top: -5px;
+}
+
+.add {
+    position: fixed;
+    height: 80px;
+    width: 90px;
+    right: 20px;
+    bottom: 20px;
+
+    border-radius: 100px;
+}
+
+.add button {
+    background: url("../image/icon_add.png") no-repeat 3px;
+    background-size: 80px 80px;
+    height: 80px;
+    width: 90px;
+    border: none;
+
+}
+
+.add:hover {
+    background-color: white;
+
+}
+.rightModal{
+    width: 50%;
+    height:100%;
+    float: left;
+    /*background-color:red;*/
+
+}
+.rightModal #location img{
+    width: 30px;
+    height:30px;
+    float: left;
+    margin-right: 10px;
+}
+.rightModal #location p{
+    color: #ff6600;
+    font-style: italic;
+}
+.rightModal #text{
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    float: left;
+}
+.rightModal #text-detail{
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-bottom: 0px;
+    float: left;
+}
+.leftModal{
+    width: 50%;
+    height:100%;
+    float: left;
+    /*background-color:yellow;*/
+}
+.leftModal #group{
+    height: 300px;
+    width: 100%;
+    overflow: scroll;
+}
+.leftModal img{
+    width: 200px;
+    height: 200px;
+    margin-left: 20%;
+    margin-bottom: 20px;
+
+
+}

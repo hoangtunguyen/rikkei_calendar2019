@@ -1,20 +1,24 @@
 package com.example.RikkeiCalendar.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
-
+@Setter
+@Getter
 @Entity
 @Table(name = "team")
-public class TeamEntity {
+public class TeamEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "team_id")
+    @Column(name = "team_id")
     private int teamId;
 
-    @JoinColumn(name = "name")
+    @Column(name = "name",length = 50)
     private String name;
 
-    @JoinColumn(name = "description")
+    @Column(name = "description")
     private String description;
 
     @ManyToOne
@@ -24,7 +28,7 @@ public class TeamEntity {
     @OneToMany(mappedBy = "team")
     private List<UserTeamEntity> userTeamEntities;
 
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag",length = 10)
     private int delFlag;
 
     public TeamEntity() {

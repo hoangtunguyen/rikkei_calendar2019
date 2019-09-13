@@ -1,13 +1,17 @@
 package com.example.RikkeiCalendar.entity;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+@Setter
+@Getter
 @Entity
 @Table(name = "user_task")
-public class UserTaskEntity {
+public class UserTaskEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "id")
+    @Column(name = "id")
     private int id;
 
     @ManyToOne

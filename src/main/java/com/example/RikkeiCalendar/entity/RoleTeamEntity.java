@@ -1,23 +1,27 @@
 package com.example.RikkeiCalendar.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
-
+@Setter
+@Getter
 @Entity
 @Table(name = "role_team")
-public class RoleTeamEntity {
+public class RoleTeamEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @JoinColumn(name = "role_team_name")
+    @Column(name = "role_team_name",length = 50)
     private String roleTeamName;
 
     @OneToMany(mappedBy = "roleTeamEntity")
     private List<UserTeamEntity> userTeamEntities;
 
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag",length = 10)
     private int delFlag;
 
     public RoleTeamEntity() {

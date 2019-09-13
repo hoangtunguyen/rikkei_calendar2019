@@ -1,32 +1,39 @@
 package com.example.RikkeiCalendar.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
+@Setter
+@Getter
 @Entity
 @Table(name = "user")
-public class UserEntity {
+public class UserEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "user_id")
+    @Column(name = "user_id")
     private int userId;
 
-    @JoinColumn(name = "name")
+    @Column(name = "name",length = 50)
     private String name;
 
-    @JoinColumn(name = "username")
+    @Column(name = "username",length = 50)
     private String username;
 
-    @JoinColumn(name = "password")
+    @Column(name = "password",length = 50)
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id",nullable = false)
-    private RoleEntity role;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
+    private RoleEntity roleEntity;
 
     @OneToMany(mappedBy = "userEntity")
     private List<TeamEntity> teamEntityList;
 
+    @OneToMany(mappedBy = "userEntityOfBigUserTask")
+    private List<BigUserTaskEntity> bigUserTaskEntities;
 
     @OneToMany(mappedBy = "user")
     private List<UserTeamEntity> userTeamEntities;
@@ -34,24 +41,31 @@ public class UserEntity {
     @OneToMany(mappedBy = "userInTask")
     private List<UserTaskEntity> userTaskEntities;
 
-    @OneToMany(mappedBy = "creator")
-    private List<TaskEntity> ownTasks;
-
-    @JoinColumn(name = "del_flag")
+    @Column(name = "del_flag",length = 10)
     private int delFlag;
 
     public UserEntity() {
     }
 
-    public UserEntity(String name, String username, String password, RoleEntity role, List<TeamEntity> teamEntityList, List<UserTeamEntity> userTeamEntities, List<UserTaskEntity> userTaskEntities, List<TaskEntity> ownTasks, int delFlag) {
+
+    public UserEntity(String name, String username, String password, RoleEntity roleEntity, int delFlag) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.roleEntity = roleEntity;
+        this.delFlag = delFlag;
+    }
+
+    public UserEntity(String createdBy, Timestamp createdDate, String updatedBy, Timestamp updatedDate, String name, String username, String password, RoleEntity roleEntity, List<TeamEntity> teamEntityList, List<BigUserTaskEntity> bigUserTaskEntities, List<UserTeamEntity> userTeamEntities, List<UserTaskEntity> userTaskEntities, int delFlag) {
+        super(createdBy, createdDate, updatedBy, updatedDate);
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.roleEntity = roleEntity;
         this.teamEntityList = teamEntityList;
+        this.bigUserTaskEntities = bigUserTaskEntities;
         this.userTeamEntities = userTeamEntities;
         this.userTaskEntities = userTaskEntities;
-        this.ownTasks = ownTasks;
         this.delFlag = delFlag;
     }
 
@@ -88,11 +102,11 @@ public class UserEntity {
     }
 
     public RoleEntity getRole() {
-        return role;
+        return roleEntity;
     }
 
     public void setRole(RoleEntity role) {
-        this.role = role;
+        this.roleEntity = role;
     }
 
     public List<TeamEntity> getTeamEntityList() {
@@ -119,14 +133,6 @@ public class UserEntity {
         this.userTaskEntities = userTaskEntities;
     }
 
-    public List<TaskEntity> getOwnTasks() {
-        return ownTasks;
-    }
-
-    public void setOwnTasks(List<TaskEntity> ownTasks) {
-        this.ownTasks = ownTasks;
-    }
-
     public int getDelFlag() {
         return delFlag;
     }
@@ -134,4 +140,22 @@ public class UserEntity {
     public void setDelFlag(int delFlag) {
         this.delFlag = delFlag;
     }
+
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
+
+    public List<BigUserTaskEntity> getBigUserTaskEntities() {
+        return bigUserTaskEntities;
+    }
+
+    public void setBigUserTaskEntities(List<BigUserTaskEntity> bigUserTaskEntities) {
+        this.bigUserTaskEntities = bigUserTaskEntities;
+    }
+
+
 }
