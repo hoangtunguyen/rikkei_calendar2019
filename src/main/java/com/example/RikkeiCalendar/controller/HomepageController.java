@@ -2,9 +2,7 @@ package com.example.RikkeiCalendar.controller;
 
 import com.example.RikkeiCalendar.convert.TaskConvert;
 import com.example.RikkeiCalendar.entity.CalendarModel;
-import com.example.RikkeiCalendar.entity.RoleEntity;
 import com.example.RikkeiCalendar.request.TaskRequestOnlyStatus;
-import com.example.RikkeiCalendar.request.UserRequest;
 import com.example.RikkeiCalendar.respones.TaskReponse;
 import com.example.RikkeiCalendar.service.BigTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+// Author Louie
 @Controller
 public class HomepageController {
     @Autowired
